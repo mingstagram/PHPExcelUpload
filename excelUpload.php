@@ -4,6 +4,10 @@ class ExcelUpload {
     function __construct (){
         require_once('config.php');
         $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE);
+
+        if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+        }
     }
     // function insert_info($eno, $team, $name, $position) {
     //     $eno = (int)$eno;
@@ -13,7 +17,7 @@ class ExcelUpload {
     //     $stmt -> close();
     //     return $result;
     // }
-    function insert_info($data) {
+    function insert_info($data) { 
         $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE);
         $sql = "
             INSERT into topic 
@@ -62,11 +66,10 @@ class ExcelUpload {
     function get_total_employee() {
         $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE);
         $sql = "SELECT count(*) total from topic";
-        $stmt = $conn -> prepare($sql);
-        $stmt -> execute();
-        $stmt -> bind_result($total);
-        $stmt -> fetch();
-        $stmt -> close();
+        $result = mysqli_query($conn, $sql);
+        $row = $result->fetch_assoc();
+        $total = $row['total'];
+        $conn->close(); 
         return $total;
     }
 }

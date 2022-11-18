@@ -15,6 +15,13 @@ $result['total'] = 0;
 for($i =0; $i < count($list); $i++){ 
     // 있는지 조회
     // 없으면 삽입 / 있으면 업데이트  
+
+    // 암호화가 필요한 경우
+    // $encrypted = [];
+    // $encrypted['eno'] = $Encrypt -> aes_encrypt($list[$i]['사번']);
+    // $encrypted['team'] = $Encrypt -> aes_encrypt($list[$i]['팀']);
+    // $encrypted['name'] = $Encrypt -> aes_encrypt($list[$i]['이름']);
+
     $idValue = !isset($list[$i]['id']) ? 0 : $list[$i]['id'];
     $response = $sw -> select_info($idValue);  
     if(isset($response['id'])) {
@@ -33,10 +40,7 @@ for($i =0; $i < count($list); $i++){
         }
     }
 
-    // $encrypted = [];
-    // $encrypted['eno'] = $Encrypt -> aes_encrypt($list[$i]['사번']);
-    // $encrypted['team'] = $Encrypt -> aes_encrypt($list[$i]['팀']);
-    // $encrypted['name'] = $Encrypt -> aes_encrypt($list[$i]['이름']);
+
     // $response = $sw -> select_info($encrypted['eno']);
     // if(isset($response['eno'])) {
     //     $response = $sw -> update_info($encrypted);
